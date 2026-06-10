@@ -5,6 +5,13 @@ defmodule RewardSystemWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :browser do
+    plug :accepts, ["html"]
+    plug :fetch_session
+    plug RewardSystem.Accounts.Auth, :fetch_current_user
+  end
+
+
   scope "/api", RewardSystemWeb do
     pipe_through :api
 
