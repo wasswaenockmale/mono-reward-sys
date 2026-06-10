@@ -7,6 +7,7 @@ defmodule RewardSystem.Accounts.User do
     field :email, :string
     field :points, :integer, default: 0
     field :wallet_balance, :integer, default: 0
+    field :hashed_password, :string
 
     has_many :rewards, RewardSystem.Rewards.Reward
     has_many :redemptions, RewardSystem.Rewards.Redemption
@@ -15,10 +16,19 @@ defmodule RewardSystem.Accounts.User do
     timestamps()
   end
 
-  def changeset(user, attrs) do
+  def registration_changeset(user, attrs) do
     user
-    |> cast(attrs, [:name, :email, :points, :wallet_balance])
-    |> validate_required([:name, :email])
+    |> cast(attrs, [:name, :email, :password])
+    |> validate_required([:name, :email, :password])
     |> unique_constraint(:email)
+    |> put_password_hash()
+  end
+
+  defp put_password_hash(changeset) do
+    if password = get_change(changeset, :password) do
+      change(changeset, hashed_password: Bcrypt.hash_pwd_salt(password))
+    else
+      changeset
+    end
   end
 end
