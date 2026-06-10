@@ -7,6 +7,9 @@ defmodule RewardSystemWeb.Router do
 
   scope "/api", RewardSystemWeb do
     pipe_through :api
+
+    post "/earn_points", RewardController, :earn_points
+    post "/redeem_points", RewardController, :redeem_points
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
