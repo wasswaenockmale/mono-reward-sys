@@ -3,7 +3,7 @@ import Config
 # Configure your database
 config :reward_system, RewardSystem.Repo,
   username: "postgres",
-  password: "12345",
+  password: "postgres",
   hostname: "localhost",
   database: "reward_system_dev",
   stacktrace: true,
