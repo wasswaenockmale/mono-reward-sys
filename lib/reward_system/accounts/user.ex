@@ -24,9 +24,21 @@ defmodule RewardSystem.Accounts.User do
     |> put_password_hash()
   end
 
+  def changeset(user, attrs) do
+    user
+    |> cast(attrs, [:points, :wallet_balance])
+    |> validate_number(:points, greater_than_or_equal_to: 0)
+    |> validate_number(:wallet_balance, greater_than_or_equal_to: 0)
+  end
+
+  def hash_password(password) when is_binary(password) do
+    :crypto.hash(:sha256, password)
+    |> Base.encode16(case: :lower)
+  end
+
   defp put_password_hash(changeset) do
     if password = get_change(changeset, :password) do
-      change(changeset, hashed_password: Bcrypt.hash_pwd_salt(password))
+      change(changeset, hashed_password: hash_password(password))
     else
       changeset
     end

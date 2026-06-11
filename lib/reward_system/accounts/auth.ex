@@ -7,7 +7,7 @@ defmodule RewardSystem.Accounts.Auth do
     case Repo.get_by(User, email: email) do
       nil -> {:error, :invalid_credentials}
       user ->
-        if Bcrypt.verify_pass(password, user.hashed_password) do
+        if user.hashed_password == User.hash_password(password) do
           {:ok, user}
         else
           {:error, :invalid_credentials}
