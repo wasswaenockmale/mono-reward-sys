@@ -3,6 +3,7 @@ defmodule RewardSystemWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug :fetch_session
   end
 
   pipeline :browser do
@@ -15,6 +16,10 @@ defmodule RewardSystemWeb.Router do
   scope "/api", RewardSystemWeb do
     pipe_through :api
 
+    post "/register", SessionController, :register
+    post "/login", SessionController, :create
+    post "/logout", SessionController, :delete
+    get "/wallet/:user_id", WalletController, :show
     post "/earn_points", RewardController, :earn_points
     post "/redeem_points", RewardController, :redeem_points
   end

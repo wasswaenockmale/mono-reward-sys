@@ -8,6 +8,7 @@ defmodule RewardSystem.Accounts.User do
     field :points, :integer, default: 0
     field :wallet_balance, :integer, default: 0
     field :hashed_password, :string
+    field :password, :string, virtual: true
 
     has_many :rewards, RewardSystem.Rewards.Reward
     has_many :redemptions, RewardSystem.Rewards.Redemption

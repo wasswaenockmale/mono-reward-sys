@@ -18,9 +18,9 @@ Enum.each(seed_users, fn attrs ->
       |> Ecto.Changeset.change(%{points: attrs.points, wallet_balance: attrs.wallet_balance})
       |> Repo.update!()
 
-      IO.puts("Seeded user: #{attrs.email} (points: #{attrs.points})")
+      IO.puts("Seeded user: id=#{user.id}, email=#{attrs.email}, points=#{attrs.points}")
 
     existing_user ->
-      IO.puts("User already exists: #{existing_user.email}")
+      IO.puts("User already exists: id=#{existing_user.id}, email=#{existing_user.email}, points=#{existing_user.points}")
   end
 end)

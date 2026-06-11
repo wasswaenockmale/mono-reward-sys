@@ -48,6 +48,10 @@ defmodule RewardSystemWeb.Endpoint do
 
   plug Plug.MethodOverride
   plug Plug.Head
+  plug CORSPlug,
+    origin: ["http://127.0.0.1:4173", "http://localhost:5173"],
+    credentials: true,
+    max_age: 86400
   plug Plug.Session, @session_options
   plug RewardSystemWeb.Router
 end

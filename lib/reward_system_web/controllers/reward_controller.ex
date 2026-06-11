@@ -7,6 +7,7 @@ defmodule RewardSystemWeb.RewardController do
     points = case type do
       "purchase" -> String.to_integer(value) |> div(10)
       "referral" -> 50
+      "login_bonus" -> String.to_integer(value)
       _ -> 0
     end
 
